@@ -1,0 +1,30 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment variables / secrets
+.env
+
+# OS/editor files
+.DS_Store
+.vscode/
+.idea/
+
+# Test / coverage / tooling caches
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Local databases / vector stores / uploaded files
+data/
+uploads/
+chroma_db/
+
+# Build artifacts
+dist/
+build/
