@@ -1,10 +1,7 @@
 from google import genai
 
-from app.core.config import DEFAULT_FALLBACK_ANSWER, LLM_MODEL
+from app.core.config import DEFAULT_FALLBACK_ANSWER, GEMINI_API_KEY, LLM_MODEL
 from app.core.prompt import build_prompt
-
-
-client = genai.Client()
 
 
 def generate_answer(question: str, context_chunks: list[str]) -> str:
@@ -17,6 +14,10 @@ def generate_answer(question: str, context_chunks: list[str]) -> str:
     prompt = build_prompt(question=question, context_chunks=context_chunks)
 
     try:
+        if not GEMINI_API_KEY:
+            return DEFAULT_FALLBACK_ANSWER
+
+        client = genai.Client(api_key=GEMINI_API_KEY)
         response = client.models.generate_content(
             model=LLM_MODEL,
             contents=prompt,

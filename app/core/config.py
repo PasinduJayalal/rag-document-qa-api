@@ -1,4 +1,11 @@
 
+import os
+
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
 CHUNK_SIZE = 500
 CHUNK_OVERLAP = 100
 
@@ -6,9 +13,7 @@ TOP_K_RESULTS = 3
 
 UPLOAD_DIR = "app/data/uploads"
 
-CHROMA_PATH = "app/data/chroma"
-CHROMA_COLLECTION_NAME = "document_chunks"
-
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY") or os.getenv("GOOGLE_API_KEY")
 LLM_MODEL = "gemini-3-flash-preview"
 MAX_TOKENS = 500
 

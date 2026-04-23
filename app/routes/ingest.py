@@ -2,12 +2,12 @@ from pathlib import Path
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
-from app.core.config import CHUNK_OVERLAP, CHUNK_SIZE, UPLOAD_DIR
+from app.core.config import UPLOAD_DIR
 from app.models.schemas import IngestResponse
-from app.services.parser import extract_text_from_file
 from app.services.chunker import chunk_text
 from app.services.embedder import embed_chunks
-from app.services.vector_store import store_embeddings
+from app.services.parser import extract_text_from_file
+from app.services.vector_store import store_document
 
 router = APIRouter()
 
@@ -57,8 +57,15 @@ async def ingest_document(file: UploadFile = File(...)):
                 detail="Text was extracted but no chunks were created."
             )
 
-        embeddings = embed_chunks(chunks)
-        store_embeddings(chunks, embeddings)
+        vectorizer, embeddings = embed_chunks(chunks)
+
+        if vectorizer is None or not embeddings:
+            raise HTTPException(
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+                detail="Failed to create embeddings from the document."
+            )
+
+        store_document(chunks, vectorizer, embeddings)
 
         return IngestResponse(
             message="File processed and stored successfully.",
