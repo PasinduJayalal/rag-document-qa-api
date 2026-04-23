@@ -2,6 +2,7 @@ from pathlib import Path
 
 from fastapi import APIRouter, File, HTTPException, UploadFile, status
 
+from app.core.config import CHUNK_OVERLAP, CHUNK_SIZE, UPLOAD_DIR
 from app.models.schemas import IngestResponse
 from app.services.parser import extract_text_from_file
 from app.services.chunker import chunk_text
@@ -10,8 +11,8 @@ from app.services.vector_store import store_embeddings
 
 router = APIRouter()
 
-UPLOAD_DIR = Path("app/data/uploads")
-UPLOAD_DIR.mkdir(parents=True, exist_ok=True)
+upload_dir = Path(UPLOAD_DIR)
+upload_dir.mkdir(parents=True, exist_ok=True)
 
 ALLOWED_EXTENSIONS = {".txt", ".pdf"}
 
@@ -32,7 +33,7 @@ async def ingest_document(file: UploadFile = File(...)):
             detail="Only .txt and .pdf files are supported."
         )
 
-    file_path = UPLOAD_DIR / file.filename
+    file_path = upload_dir / file.filename
 
     try:
         file_bytes = await file.read()

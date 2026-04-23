@@ -1,5 +1,6 @@
 from fastapi import APIRouter, HTTPException, status
 
+from app.core.config import DEFAULT_FALLBACK_ANSWER
 from app.models.schemas import AskRequest, AskResponse
 from app.services.retriever import retrieve_relevant_chunks
 from app.services.llm_service import generate_answer
@@ -22,14 +23,14 @@ def ask_question(payload: AskRequest):
 
         if not context_chunks:
             return AskResponse(
-                answer="I don't know",
+                answer=DEFAULT_FALLBACK_ANSWER,
                 context_chunks=[]
             )
 
         answer = generate_answer(question=question, context_chunks=context_chunks)
 
         if not answer or not answer.strip():
-            answer = "I don't know"
+            answer = DEFAULT_FALLBACK_ANSWER
 
         return AskResponse(
             answer=answer,
