@@ -6,6 +6,8 @@ TOP_K_RESULTS = 3
 
 UPLOAD_DIR = "app/data/uploads"
 
+CHROMA_PATH = "app/data/chroma"
+CHROMA_COLLECTION_NAME = "document_chunks"
 
 LLM_MODEL = "gemini"   # or groq / huggingface later
 MAX_TOKENS = 500
