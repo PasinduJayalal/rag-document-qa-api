@@ -104,3 +104,32 @@ Example response:
 
 ## Deployment
 The app is container-ready for deployment to services such as Render, Koyeb, Azure App Service, or any platform that can run a Docker container. Configure `GEMINI_API_KEY` as an environment variable in the deployment platform.
+
+### Render Deployment
+This repository includes a `render.yaml` blueprint for deploying the Dockerized backend on Render.
+
+Steps:
+1. Push this repository to GitHub.
+2. In Render, create a new Blueprint or Web Service from the GitHub repository.
+3. When prompted, provide `GEMINI_API_KEY` as a secret environment variable.
+4. Deploy the service.
+5. Open the generated Render URL and check `/docs`.
+
+After deployment, the live API URL will look similar to:
+
+```text
+https://rag-document-qa-api.onrender.com
+```
+
+Use these hosted endpoints:
+
+```text
+https://your-service-name.onrender.com/ingest
+https://your-service-name.onrender.com/ask
+https://your-service-name.onrender.com/docs
+```
+
+## CI/CD
+This repository includes a GitHub Actions workflow at `.github/workflows/docker-build.yml`.
+
+The workflow builds the Docker image on pushes to `main` or `master` and on pull requests. This gives a quick check that the Dockerfile still builds before deployment.
