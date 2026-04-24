@@ -9,3 +9,15 @@ services:
     envVars:
       - key: GEMINI_API_KEY
         sync: false
+      - key: CORS_ORIGINS
+        value: http://localhost:5173,https://rag-document-qa-ui.onrender.com
+
+  - type: web
+    name: rag-document-qa-ui
+    runtime: static
+    rootDir: frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: ./dist
+    envVars:
+      - key: VITE_API_BASE_URL
+        value: https://rag-document-qa-api.onrender.com

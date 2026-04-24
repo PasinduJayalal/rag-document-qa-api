@@ -18,3 +18,12 @@ LLM_MODEL = "gemini-3-flash-preview"
 MAX_TOKENS = 500
 
 DEFAULT_FALLBACK_ANSWER = "I don't know"
+
+CORS_ORIGINS = [
+    origin.strip()
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "http://localhost:5173,https://rag-document-qa-ui.onrender.com",
+    ).split(",")
+    if origin.strip()
+]

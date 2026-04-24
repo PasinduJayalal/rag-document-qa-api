@@ -13,7 +13,24 @@ A lightweight FastAPI RAG backend that accepts a `.txt` or `.pdf` file, stores t
 - FastAPI
 - scikit-learn TF-IDF retrieval
 - Google Gemini API
+- React + Vite frontend
 - Docker
+
+## Live API
+```text
+https://rag-document-qa-api.onrender.com
+```
+
+API docs:
+
+```text
+https://rag-document-qa-api.onrender.com/docs
+```
+
+## Live Frontend
+```text
+https://rag-document-qa-ui.onrender.com
+```
 
 ## Notes About This Version
 - This implementation keeps only one active document at a time.
@@ -59,6 +76,26 @@ Then open:
 
 ```text
 http://127.0.0.1:8000/docs
+```
+
+## Run Frontend Locally
+From the `frontend` directory:
+
+```bash
+npm install
+npm run dev
+```
+
+The frontend uses this API by default:
+
+```text
+https://rag-document-qa-api.onrender.com
+```
+
+To point it at another backend, create `frontend/.env.local`:
+
+```env
+VITE_API_BASE_URL=http://127.0.0.1:8000
 ```
 
 ## API Endpoints
@@ -115,7 +152,7 @@ Steps:
 4. Deploy the service.
 5. Open the generated Render URL and check `/docs`.
 
-After deployment, the live API URL will look similar to:
+Live API URL:
 
 ```text
 https://rag-document-qa-api.onrender.com
@@ -124,9 +161,18 @@ https://rag-document-qa-api.onrender.com
 Use these hosted endpoints:
 
 ```text
-https://your-service-name.onrender.com/ingest
-https://your-service-name.onrender.com/ask
-https://your-service-name.onrender.com/docs
+https://rag-document-qa-api.onrender.com/ingest
+https://rag-document-qa-api.onrender.com/ask
+https://rag-document-qa-api.onrender.com/docs
+```
+
+### Render Frontend Deployment
+The same `render.yaml` also defines a static site named `rag-document-qa-ui`.
+
+It builds from the `frontend` directory and uses:
+
+```text
+VITE_API_BASE_URL=https://rag-document-qa-api.onrender.com
 ```
 
 ## CI/CD
