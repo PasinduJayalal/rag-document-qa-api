@@ -30,5 +30,10 @@ def retrieve_relevant_chunks(question: str, top_k: int = TOP_K_RESULTS) -> list[
         reverse=True,
     )
 
-    top_indices = ranked_indices[:top_k]
+    top_indices = [
+        index
+        for index in ranked_indices
+        if similarity_scores[index] > 0
+    ][:top_k]
+
     return [store.chunks[index] for index in top_indices]

@@ -5,7 +5,7 @@ def embed_chunks(chunks: list[str]) -> tuple[TfidfVectorizer | None, list[list[f
     if not chunks:
         return None, []
 
-    vectorizer = TfidfVectorizer()
+    vectorizer = TfidfVectorizer(stop_words="english")
     matrix = vectorizer.fit_transform(chunks)
     return vectorizer, matrix.toarray().tolist()
 
